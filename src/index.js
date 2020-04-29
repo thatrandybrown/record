@@ -2,7 +2,7 @@
 (document.onLoad = () => {
     let change = 0;
     let metadata = {};
-    document.querySelector('textarea').addEventListener("input", event => {
+    document.querySelector('textarea').addEventListener("input", async event => {
         if((++change % 5 === 0)) {
             metadata = await fetch(document.querySelector("input[name=post_url]").value,
                     {
