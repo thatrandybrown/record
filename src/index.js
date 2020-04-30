@@ -2,9 +2,9 @@
 (document.onLoad = () => {
     let change = 0;
     let metadata = {};
-    document.querySelector('textarea').addEventListener("input", async event => {
-        if((++change % 5 === 0)) {
-            metadata = await fetch(document.querySelector("input[name=post_url]").value,
+
+    const saveData = async () => {
+        metadata = await fetch(document.querySelector("input[name=post_url]").value,
                     {
                         body: JSON.stringify({...metadata, content: document.querySelector('textarea').value}),
                         method: 'POST',
@@ -15,7 +15,18 @@
                     }
                 ).then(rsp => rsp.json())
                  .then(rsp => ({...metadata, ...rsp}))
-                // .catch(err => console.log("something went wrong", err));
+    }
+
+    document.querySelector('textarea').addEventListener("input", async event => {
+        if((++change % 5 === 0)) {
+            await saveData();
+        }
+    });
+
+    document.addEventListener("keydown", async event => {
+        if ((event.ctrlKey || event.metaKey) && 's' === String.fromCharCode(event.which).toLowerCase()) {
+            event.preventDefault();
+            await saveData();
         }
     });
 })();
