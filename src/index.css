@@ -1,0 +1,13 @@
+body {
+    padding: 2em 2em 0em;
+}
+
+input, textarea {
+    display: block;
+    width: 100%;
+}
+
+textarea {
+    resize: none;
+    height: 70vh;
+}
