@@ -6,7 +6,11 @@
     const saveData = async () => {
         metadata = await fetch(document.querySelector("input[name=post_url]").value,
                     {
-                        body: JSON.stringify({...metadata, content: document.querySelector('textarea').value}),
+                        body: JSON.stringify({
+                            ...metadata,
+                            ...JSON.parse(document.querySelector("input[name=metadata").value),
+                            content: document.querySelector('textarea').value
+                        }),
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -15,6 +19,7 @@
                     }
                 ).then(rsp => rsp.json())
                  .then(rsp => ({...metadata, ...rsp}))
+        document.querySelector("input[name=metadata]").value = JSON.stringify(metadata);
     }
 
     document.querySelector('textarea').addEventListener("input", async event => {
