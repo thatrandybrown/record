@@ -4,6 +4,17 @@
     let metadata = {};
 
     const saveData = async () => {
+        if(false && !document.querySelector("input[name=post_url]").value) {
+            window.localStorage.setItem('records', JSON.stringify([
+                ...JSON.parse(window.localStorage.getItem('records')),
+                {
+                    ...metadata,
+                    ...JSON.parse(document.querySelector("input[name=metadata]").value),
+                    content: document.querySelector('textarea').value
+                }
+            ]));
+        }
+
         metadata = await fetch(document.querySelector("input[name=post_url]").value,
                     {
                         body: JSON.stringify({
