@@ -19,7 +19,7 @@
                     {
                         body: JSON.stringify({
                             ...metadata,
-                            ...JSON.parse(document.querySelector("input[name=metadata").value),
+                            ...JSON.parse(document.querySelector("input[name=metadata]").value),
                             content: document.querySelector('textarea').value
                         }),
                         method: 'POST',
