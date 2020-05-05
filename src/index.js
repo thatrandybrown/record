@@ -45,4 +45,6 @@
             await saveData();
         }
     });
+
+    document.querySelector('textarea').focus();
 })();
