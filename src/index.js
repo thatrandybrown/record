@@ -3,34 +3,15 @@
     let change = 0;
     let metadata = {};
 
-    const saveData = async () => {
-        if(false && !document.querySelector("input[name=post_url]").value) {
-            window.localStorage.setItem('records', JSON.stringify([
-                ...JSON.parse(window.localStorage.getItem('records')),
-                {
-                    ...metadata,
-                    ...JSON.parse(document.querySelector("input[name=metadata]").value),
-                    content: document.querySelector('textarea').value
-                }
-            ]));
-        }
+    let records = JSON.parse(window.localStorage.getItem('records')) || {};
+    let cid = Object.keys(records).length;
 
-        metadata = await fetch(document.querySelector("input[name=post_url]").value,
-                    {
-                        body: JSON.stringify({
-                            ...metadata,
-                            ...JSON.parse(document.querySelector("input[name=metadata]").value),
-                            content: document.querySelector('textarea').value
-                        }),
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${document.querySelector("input[name=post_key]").value}`
-                        }
-                    }
-                ).then(rsp => rsp.json())
-                 .then(rsp => ({...metadata, ...rsp}))
-        document.querySelector("input[name=metadata]").value = JSON.stringify(metadata);
+    const saveData = async () => {
+        records = {
+            ...records,
+            [cid]: {content: document.querySelector('textarea').value, cid}
+        };
+        window.localStorage.setItem('records', JSON.stringify(records));
     }
 
     document.querySelector('textarea').addEventListener("input", async event => {
