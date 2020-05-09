@@ -9,7 +9,11 @@
     const saveData = async () => {
         records = {
             ...records,
-            [cid]: {content: document.querySelector('textarea').value, cid}
+            [cid]: [ ...(records[cid] ? records[cid] : []), {
+                content: document.querySelector('textarea').value,
+                cid,
+                createTime: Date.now()
+            }]
         };
         window.localStorage.setItem('records', JSON.stringify(records));
     }
