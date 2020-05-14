@@ -9,6 +9,13 @@
 
     const entries = Object.keys(records).reduce((acc, item) => [...acc, {...records[item][records[item].length - 1], stub: firstLine(records[item][records[item].length - 1].content)}], []).map(({cid, stub}) => ({cid, stub}));
 
+    document.querySelector('nav').append(entries.reduce((acc, item) => {
+        const div = document.createElement('div');
+        div.appendChild(document.createTextNode(item.stub));
+        acc.appendChild(div);
+        return acc;
+    }, document.createDocumentFragment()));
+
     const saveData = async () => {
         records = {
             ...records,
