@@ -7,7 +7,31 @@ input, textarea {
     width: 100%;
 }
 
+/* textarea, textarea:focus {
+    border: none;
+} */
+
 textarea {
     resize: none;
     height: 70vh;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    margin: 0;
+    line-height: 3.5em;
+    padding: 0em 1em;
+    font-size: 1.5em;
+
+    width: 15vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+li:hover {
+    background-color: #F1F1F1;
 }
