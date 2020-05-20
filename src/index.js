@@ -10,11 +10,11 @@
     const entries = Object.keys(records).reduce((acc, item) => [...acc, {...records[item][records[item].length - 1], stub: firstLine(records[item][records[item].length - 1].content)}], []).map(({cid, stub}) => ({cid, stub}));
 
     document.querySelector('nav').append(entries.reduce((acc, item) => {
-        const div = document.createElement('div');
-        div.appendChild(document.createTextNode(item.stub));
-        acc.appendChild(div);
+        const li = document.createElement('li');
+        li.appendChild(document.createTextNode(item.stub));
+        acc.appendChild(li);
         return acc;
-    }, document.createDocumentFragment()));
+    }, document.createElement('ul')));
 
     const saveData = async () => {
         records = {
