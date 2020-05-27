@@ -7,8 +7,6 @@
     const positiveInstance = num => num < 0 ? 0 : num;
     const firstLine = str => str.substr(0, Math.max(positiveInstance(str.indexOf("\n")), positiveInstance(str.indexOf(".") + 1)) || 40);
 
-    // const entries = Object.keys(records).reduce((acc, item) => [...acc, {...records[item][records[item].length - 1], stub: firstLine(records[item][records[item].length - 1].content)}], []).map(({cid, stub}) => ({cid, stub}));
-
     const loadEntries = () => {
         const entries = Object.keys(records).reduce((acc, item) => [...acc, {...records[item][records[item].length - 1], stub: firstLine(records[item][records[item].length - 1].content)}], []).map(({cid, stub}) => ({cid, stub}));
         const stubs = entries.reduce((acc, item) => {
@@ -22,8 +20,6 @@
             acc.appendChild(li);
             return acc;
         }, document.createElement('ul'));
-        // document.querySelector('nav').append(stubs);
-        console.log(document.querySelector('nav > ul'));
         document.querySelector('nav > ul') ? document.querySelector('nav').replaceChild(stubs, document.querySelector('nav > ul')) : document.querySelector('nav').append(stubs);
     }
 
@@ -56,3 +52,53 @@
     loadEntries();
     document.querySelector('textarea').focus();
 })();
+
+/**
+if(false && !document.querySelector("input[name=post_url]").value) {
+    records = {
+        ...records,
+        [metadata.id ? metadata.id : cid]: {
+            ...records[metadata.id ? metadata.id : cid],
+            ...metadata,
+            ...JSON.parse(document.querySelector("input[name=metadata]").value),
+            content: document.querySelector('textarea').value,
+            cid
+        }
+    };
+    cid++;
+    window.localStorage.setItem('records', JSON.stringify(records));
+}
+
+// metadata = await fetch(document.querySelector("input[name=post_url]").value,
+//             {
+//                 body: JSON.stringify({
+//                     ...metadata,
+//                     ...JSON.parse(document.querySelector("input[name=metadata]").value),
+//                     content: document.querySelector('textarea').value
+//                 }),
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                     'Authorization': `Bearer ${document.querySelector("input[name=post_key]").value}`
+//                 }
+//             }
+//         ).then(rsp => rsp.json())
+//          .then(rsp => ({...metadata, ...rsp}))
+document.querySelector("input[name=metadata]").value = JSON.stringify({cid, ...metadata});
+
+
+
+    // so we can store metadata on the shape of records
+    // this should _always_ be a flat object
+
+    // this whole thing probably needs to be wrapped in an if statement
+    // to write the metadata back to localStorage
+    let appMetadata = JSON.parse(window.localStorage.getItem("records_metadata")) || {
+        version: "0.1.0",
+        records: "array",
+        record: ["content","cid"]
+    };
+
+    // if this has a metadata.id, that is either provided by the user
+    // or sent from the service and should be preferred for consistency
+*/
